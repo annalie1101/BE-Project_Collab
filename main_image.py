@@ -10,9 +10,9 @@ from utils_LP import character_recog_CNN, crop_n_rotate_LP
 
 Min_char = 0.01
 Max_char = 0.09
-image_path = '/content/drive/MyDrive/test_data/test_img.jpg'
-CHAR_CLASSIFICATION_WEIGHTS = '/content/drive/MyDrive/test_data/mrzaizai_cnn.h5'
-LP_weights = '/content/drive/MyDrive/test_data/yolov7_weights_1000imgs_4classes_25epoch.pt'
+image_path = 'test_data/test_img.jpg'
+CHAR_CLASSIFICATION_WEIGHTS = 'test_data/mrzaizai_cnn.h5'
+LP_weights = 'test_data/yolov7_weights_1000imgs_4classes_25epoch.pt'
 
 output_folder_path = "output"  # Update with your desired folder path
 if not os.path.exists(output_folder_path):
