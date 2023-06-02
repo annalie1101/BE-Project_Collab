@@ -54,6 +54,7 @@ def crop_n_rotate_LP(source_img, x1, y1, x2, y2):
         cropped_LP = source_img[y1:y1 + h, x1:x1 + w]
         cropped_LP_copy = cropped_LP.copy()
         # cv2.imwrite('doc/cropped_LP2.png',cropped_LP)
+        cv2.imwrite('output/cropped_LP.png',cropped_LP)
 
         imgGrayscaleplate, imgThreshplate = preprocess(cropped_LP)
         canny_image = cv2.Canny(imgThreshplate, 250, 255)  # Canny Edge
@@ -81,3 +82,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
