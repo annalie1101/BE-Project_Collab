@@ -38,6 +38,18 @@ def character_recog_CNN(model, img, dict=ALPHA_DICT):
     result_idx = np.argmax(result, axis=1)
     return ALPHA_DICT[result_idx[0]]
 
+def crop_img(source_img, x1, y1, x2, y2):
+    '''
+    Crop detected object from original image after yolov7
+    :param source_img:
+    :param x1,y1,x2,y2: coordinates of detected objects
+    :return: cropped_img
+    '''
+
+    w = int(x2 - x1)
+    h = int(y2 - y1)
+    cropped_img = source_img[y1:y1 + h, x1:x1 + w]
+    return cropped_img
 
 def crop_n_rotate_LP(source_img, x1, y1, x2, y2):
     '''
@@ -49,12 +61,13 @@ def crop_n_rotate_LP(source_img, x1, y1, x2, y2):
     w = int(x2 - x1)
     h = int(y2 - y1)
     ratio = w / h
-    # print ('ratio',ratio)
-    if 0.8 <= ratio <= 1.5 or 3.5 <= ratio <= 6.5:
+    print ('ratio',ratio)
+    #if 0.8 <= ratio <= 1.5 or 3.5 <= ratio <= 6.5:
+    if 0.8 <= ratio <= 2 or 3.5 <= ratio <= 6.5:
         cropped_LP = source_img[y1:y1 + h, x1:x1 + w]
         cropped_LP_copy = cropped_LP.copy()
         # cv2.imwrite('doc/cropped_LP2.png',cropped_LP)
-        cv2.imwrite('output/cropped_LP.png',cropped_LP)
+        cv2.imwrite('output/6cropped_LP.png',cropped_LP)
 
         imgGrayscaleplate, imgThreshplate = preprocess(cropped_LP)
         canny_image = cv2.Canny(imgThreshplate, 250, 255)  # Canny Edge

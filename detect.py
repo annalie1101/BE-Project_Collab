@@ -70,9 +70,11 @@ def detect(model, image, device, imgsz=640, conf_thres=0.25,
 
         # Print time (inference + NMS)
         print(f'Done. ({(1E3 * (t2 - t1)):.1f}ms) Inference, ({(1E3 * (t3 - t2)):.1f}ms) NMS')
-        print('Number of License Plate:', len(det))
+        print('Number of Detections:', len(det))
 
         # cv2.imshow('Detected license plates', cv2.resize(im0, dsize=None, fx=0.5, fy=0.5))
+    if final_pred == [] or final_pred is None:
+        return None, im0
 
     print(f'Done. ({time.time() - t0:.3f}s)')
     return final_pred[0].to(device='cpu').detach().numpy(), im0
