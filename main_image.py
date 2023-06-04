@@ -120,13 +120,19 @@ else:
                 first_line = ""
                 second_line = ""
 
+                skip = False
                 for i, char in enumerate(char_x):
+                    if skip:
+                        skip = False
+                        continue
                     x, y, w, h = char
                     cv2.rectangle(LP_rotated, (x, y), (x + w, y + h), (0, 255, 0), 2)
                     imgROI = rotate_thresh[y:y + h, x:x + w]
                     # cv2.imshow('imgROI', imgROI)
-                    # cv2.imwrite(os.path.join(output_folder_path, "imgROI"), imgROI)
                     text = character_recog_CNN(model_char, imgROI)
+
+                    if text == '0':
+                        skip = True
                     if text == 'Background':
                         text = ''
 
