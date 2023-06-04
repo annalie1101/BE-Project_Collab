@@ -10,7 +10,7 @@ from utils_LP import character_recog_CNN, crop_img, crop_n_rotate_LP
 
 Min_char = 0.01
 Max_char = 0.09
-image_path = 'test_data/test_img.jpg'
+image_path = 'test_data/full_test_img.jpg'
 CHAR_CLASSIFICATION_WEIGHTS = 'test_data/mrzaizai_cnn.h5'
 LP_weights = 'test_data/yolov7_weights_1000imgs_4classes_50epoch.pt'
 
@@ -61,7 +61,7 @@ else:
 
         # Detect LP
         print('Detecting LP...')
-        pred, LP_detected_img = detect(model_LP, source_img, device, imgsz=640, classes=0)
+        pred, LP_detected_img = detect(model_LP, head_detected_img, device, imgsz=640, classes=0)
         if pred is None:
             print('No LP detected.')
         else:
@@ -72,7 +72,7 @@ else:
             for *xyxy, conf, cls in reversed(pred):
                 # Crop and Rotate LP
                 x1, y1, x2, y2 = int(xyxy[0]), int(xyxy[1]), int(xyxy[2]), int(xyxy[3])
-                angle, rotate_thresh, LP_rotated = crop_n_rotate_LP(source_img, x1, y1, x2, y2)
+                angle, rotate_thresh, LP_rotated = crop_n_rotate_LP(head_detected_img, x1, y1, x2, y2)
                 if (rotate_thresh is None) or (LP_rotated is None):
                     continue
                 # cv2.imshow('LP_rotated', LP_rotated)

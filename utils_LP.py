@@ -49,7 +49,8 @@ def crop_img(source_img, x1, y1, x2, y2):
     w = int(x2 - x1)
     h = int(y2 - y1)
     cropped_img = source_img[y1:y1 + h, x1:x1 + w]
-    return cropped_img
+    cropped_LP_copy = cropped_LP.copy()
+    return cropped_LP_copy
 
 def crop_n_rotate_LP(source_img, x1, y1, x2, y2):
     '''
