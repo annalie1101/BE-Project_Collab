@@ -64,27 +64,28 @@ def crop_n_rotate_LP(source_img, x1, y1, x2, y2):
     ratio = w / h
     print ('ratio',ratio)
     #if 0.8 <= ratio <= 1.5 or 3.5 <= ratio <= 6.5:
-    if 0.8 <= ratio <= 2 or 3.5 <= ratio <= 6.5:
-        cropped_LP = source_img[y1:y1 + h, x1:x1 + w]
-        cropped_LP_copy = cropped_LP.copy()
-        # cv2.imwrite('doc/cropped_LP2.png',cropped_LP)
-        cv2.imwrite('output/6cropped_LP.png',cropped_LP)
+    #if 0.8 <= ratio <= 2 or 3.5 <= ratio <= 6.5:
+    cropped_LP = source_img[y1:y1 + h, x1:x1 + w]
+    cropped_LP_copy = cropped_LP.copy()
+    # cv2.imwrite('doc/cropped_LP2.png',cropped_LP)
+    #cv2.imwrite('output/6cropped_LP.png', cropped_LP)
 
-        imgGrayscaleplate, imgThreshplate = preprocess(cropped_LP)
-        canny_image = cv2.Canny(imgThreshplate, 250, 255)  # Canny Edge
-        kernel = np.ones((3, 3), np.uint8)
-        dilated_image = cv2.dilate(canny_image, kernel, iterations=2)
+    imgGrayscaleplate, imgThreshplate = preprocess(cropped_LP)
+    canny_image = cv2.Canny(imgThreshplate, 250, 255)  # Canny Edge
+    kernel = np.ones((3, 3), np.uint8)
+    dilated_image = cv2.dilate(canny_image, kernel, iterations=2)
 
-        linesP = Hough_transform(dilated_image, nol=6)
-        for i in range(0, len(linesP)):
-            l = linesP[i][0].astype(int)
-            # cv2.line(cropped_LP_copy, (l[0], l[1]), (l[2], l[3]), (0, 0, 255), 3, cv2.LINE_AA)
+    linesP = Hough_transform(dilated_image, nol=6)
+    for i in range(0, len(linesP)):
+        l = linesP[i][0].astype(int)
+        # cv2.line(cropped_LP_copy, (l[0], l[1]), (l[2], l[3]), (0, 0, 255), 3, cv2.LINE_AA)
 
-        angle = rotation_angle(linesP)
-        rotate_thresh = rotate_LP(imgThreshplate, angle)
-        LP_rotated = rotate_LP(cropped_LP, angle)
-    else:
-        angle, rotate_thresh, LP_rotated = None, None, None
+    angle = rotation_angle(linesP)
+    rotate_thresh = rotate_LP(imgThreshplate, angle)
+    LP_rotated = rotate_LP(cropped_LP, angle)
+
+    #else:
+    #    angle, rotate_thresh, LP_rotated = None, None, None
 
     return angle, rotate_thresh, LP_rotated
 
